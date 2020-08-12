@@ -1,0 +1,27 @@
+name: 'Package Publish Helper'
+description: ''
+inputs:
+  folder:
+    description: ''
+    required: false
+
+  folders:
+    description: ''
+    required: false
+
+  mode:
+    description: ''
+    required: true
+
+  branch:
+    description: ''
+    required: true
+    default: 'develop'
+
+outputs:
+  should_publish:
+    description: ''
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
