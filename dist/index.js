@@ -1284,7 +1284,7 @@ function shouldVersionBeUpdated(foldersStr, targetBranch) {
             const targetPackageRaw = yield run(`git show origin/${targetBranch}:${localRelativePackagePath}`);
             const targetPackage = JSON.parse(targetPackageRaw);
             if (semver_default().lte(localPackage.version, targetPackage.version)) {
-                output.push(`Package version needs to be updated in ${folder}. It's less than or equal to ${targetBranch} (${localPackage.version})`);
+                output.push(`Changes found for ${folder} but package version has not been updated`);
                 error = true;
             }
             else {

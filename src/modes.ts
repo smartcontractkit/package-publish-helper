@@ -62,7 +62,7 @@ export async function shouldVersionBeUpdated(
 
     if (semver.lte(localPackage.version, targetPackage.version)) {
       output.push(
-        `Package version needs to be updated in ${folder}. It's less than or equal to ${targetBranch} (${localPackage.version})`,
+        `Changes found for ${folder} but package version has not been updated`,
       )
       error = true
     } else {
