@@ -6,8 +6,6 @@ import {
 } from './constants'
 import fetch from 'node-fetch'
 
-export { red, green } from 'chalk'
-
 export const parseFolders = (folders: string): string[] =>
   folders.split(' ').filter((f) => f !== '')
 

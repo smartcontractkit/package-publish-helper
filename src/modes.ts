@@ -5,8 +5,6 @@ import {
   run,
   folderHasGitChanges,
   getRemoteVersion,
-  red,
-  green,
 } from './helpers'
 
 type ShouldPublish = 'yes' | 'no'
@@ -28,7 +26,7 @@ export async function shouldPackagePublish(
   console.log(`Remote version is ${remoteVersion}, local verison is ${version}`)
 
   if (semver.gt(version, remoteVersion)) {
-    console.log(green(`Package should publish`))
+    console.log(`Package should publish`)
     should_publish = 'yes'
   } else {
     should_publish = 'no'
@@ -48,7 +46,7 @@ export async function shouldVersionBeUpdated(
 
   for (const folder of folders) {
     if (!(await folderHasGitChanges(targetBranch, folder))) {
-      console.log(green(`No changes found for ${folder}`))
+      console.log(`No changes found for ${folder}`)
       continue
     }
     const localRelativePackagePath = path.join(folder, 'package.json')
@@ -64,15 +62,11 @@ export async function shouldVersionBeUpdated(
 
     if (semver.lte(localPackage.version, targetPackage.version)) {
       output.push(
-        red(
-          `Package version needs to be updated in ${folder}. It's less than or equal to ${targetBranch} (${localPackage.version})`,
-        ),
+        `Package version needs to be updated in ${folder}. It's less than or equal to ${targetBranch} (${localPackage.version})`,
       )
       error = true
     } else {
-      console.log(
-        green(`Changes found for ${folder} but version has been updated`),
-      )
+      console.log(`Changes found for ${folder} but version has been updated`)
     }
   }
 
