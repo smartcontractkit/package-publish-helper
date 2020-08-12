@@ -62,11 +62,13 @@ export async function shouldVersionBeUpdated(
 
     if (semver.lte(localPackage.version, targetPackage.version)) {
       output.push(
-        `Changes found for ${folder} but package version has not been updated`,
+        `Changes found for ${folder} and package version has not been updated`,
       )
       error = true
     } else {
-      console.log(`Changes found for ${folder} but version has been updated`)
+      console.log(
+        `Changes found for ${folder} but package version has been updated`,
+      )
     }
   }
 
