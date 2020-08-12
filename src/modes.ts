@@ -58,7 +58,7 @@ export async function shouldVersionBeUpdated(
     )
     const localPackage = require(localAbsolutePackagePath)
     const targetPackageRaw = await run(
-      `git show ${targetBranch}:${localRelativePackagePath}`,
+      `git show origin/${targetBranch}:${localRelativePackagePath}`,
     )
     const targetPackage = JSON.parse(targetPackageRaw)
 

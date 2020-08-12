@@ -1285,7 +1285,7 @@ function shouldVersionBeUpdated(foldersStr, targetBranch) {
             const localRelativePackagePath = external_path_default().join(folder, 'package.json');
             const localAbsolutePackagePath = external_path_default().join(process.env.GITHUB_WORKSPACE, localRelativePackagePath);
             const localPackage = __webpack_require__(875)(localAbsolutePackagePath);
-            const targetPackageRaw = yield run(`git show ${targetBranch}:${localRelativePackagePath}`);
+            const targetPackageRaw = yield run(`git show origin/${targetBranch}:${localRelativePackagePath}`);
             const targetPackage = JSON.parse(targetPackageRaw);
             if (semver_default().lte(localPackage.version, targetPackage.version)) {
                 output.push(Object(source.red)(`Package version needs to be updated in ${folder}. It's less than or equal to ${targetBranch} (${localPackage.version})`));
