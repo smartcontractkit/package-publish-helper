@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import { shouldPackagePublish, shouldVersionBeUpdated } from './modes'
-import { validateEnvironment } from './helpers'
+import { validateEnvironment, run } from './helpers'
 
 async function main() {
   const mode = core.getInput('mode')
@@ -20,6 +20,9 @@ async function main() {
   }
 
   process.chdir(process.env.GITHUB_WORKSPACE)
+
+  console.log(await run('git branch'))
+  console.log(await run('git remote -v'))
 
   try {
     if (mode === 'publish') {

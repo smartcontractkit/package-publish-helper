@@ -1324,6 +1324,8 @@ function main() {
             return;
         }
         process.chdir(process.env.GITHUB_WORKSPACE);
+        console.log(yield run('git branch'));
+        console.log(yield run('git remote -v'));
         try {
             if (mode === 'publish') {
                 const { should_publish } = yield shouldPackagePublish(folder);
