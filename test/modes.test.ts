@@ -51,6 +51,7 @@ describe('shouldVersionBeUpdated', () => {
     folderHasGitChangesSpy.mockReturnValue(false)
     const { error } = await shouldVersionBeUpdated(folders, branch)
     expect(error).toBe(false)
+    expect(folderHasGitChangesSpy).toHaveBeenCalledTimes(3)
     expect(runSpy).not.toHaveBeenCalled()
   })
 })

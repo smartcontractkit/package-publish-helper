@@ -49,7 +49,7 @@ export async function shouldVersionBeUpdated(
   for (const folder of folders) {
     if (!(await folderHasGitChanges(targetBranch, folder))) {
       console.log(green(`No changes found for ${folder}`))
-      break
+      continue
     }
     const localRelativePackagePath = path.join(folder, 'package.json')
     const localAbsolutePackagePath = path.join(

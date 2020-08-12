@@ -1280,7 +1280,7 @@ function shouldVersionBeUpdated(foldersStr, targetBranch) {
         for (const folder of folders) {
             if (!(yield folderHasGitChanges(targetBranch, folder))) {
                 console.log(Object(source.green)(`No changes found for ${folder}`));
-                break;
+                continue;
             }
             const localRelativePackagePath = external_path_default().join(folder, 'package.json');
             const localAbsolutePackagePath = external_path_default().join(process.env.GITHUB_WORKSPACE, localRelativePackagePath);
