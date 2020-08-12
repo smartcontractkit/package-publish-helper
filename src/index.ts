@@ -21,9 +21,6 @@ async function main() {
 
   process.chdir(process.env.GITHUB_WORKSPACE)
 
-  console.log(await run('git branch'))
-  console.log(await run('git remote -v'))
-
   try {
     if (mode === 'publish') {
       const { should_publish } = await shouldPackagePublish(folder)
