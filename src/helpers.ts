@@ -1,5 +1,4 @@
-import path from 'path'
-import { spawn } from 'child_process'
+import { exec } from 'child_process'
 import {
   REGISTRY_URL,
   REMOTE_VERSION_FAIL_TIMEOUT,
@@ -13,7 +12,7 @@ export const parseFolders = (folders: string): string[] =>
   folders.split(' ').filter((f) => f !== '')
 
 export const folderHasGitChanges = async (branch: string, folder: string) => {
-  const { output } = await run(`git diff ${branch} ${folder}`)
+  const output = await run(`git diff ${branch} ${folder}`)
   return output.length > 0
 }
 
@@ -42,26 +41,11 @@ export async function getRemoteVersion(
   return (await res.json())['dist-tags']['latest']
 }
 
-export const run = (cmd: string): Promise<{ code: number; output: string }> =>
+export const run = async (cmd: string): Promise<string> =>
   new Promise((resolve, reject) => {
-    const child = spawn(cmd, [], { shell: true, stdio: 'inherit' })
-    const output: string[] = []
-
-    child.stdout?.on('data', (data: Buffer) => {
-      output.push(data.toString())
-    })
-
-    child.stderr?.on('data', (data: string) => {
-      output.push(data.toString())
-    })
-
-    child.on('close', (code: number) => {
-      if (code !== 0) {
-        return reject(
-          `The command '${cmd}' exited with status code ${code}. \n\n ${output.join()}`,
-        )
-      }
-      resolve({ code, output: output.join() })
+    exec(cmd, (error, stdout) => {
+      if (error) return reject(error)
+      resolve(stdout)
     })
   })
 

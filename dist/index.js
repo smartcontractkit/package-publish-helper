@@ -1178,7 +1178,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 const parseFolders = (folders) => folders.split(' ').filter((f) => f !== '');
 const folderHasGitChanges = (branch, folder) => __awaiter(void 0, void 0, void 0, function* () {
-    const { output } = yield run(`git diff ${branch} ${folder}`);
+    const output = yield run(`git diff ${branch} ${folder}`);
     return output.length > 0;
 });
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -1200,21 +1200,13 @@ function getRemoteVersion(name, count = 0) {
         return (yield res.json())['dist-tags']['latest'];
     });
 }
-const run = (cmd) => new Promise((resolve, reject) => {
-    var _a, _b;
-    const child = Object(external_child_process_.spawn)(cmd, [], { shell: true, stdio: 'inherit' });
-    const output = [];
-    (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.on('data', (data) => {
-        output.push(data.toString());
-    });
-    (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.on('data', (data) => {
-        output.push(data.toString());
-    });
-    child.on('close', (code) => {
-        if (code !== 0) {
-            return reject(`The command '${cmd}' exited with status code ${code}. \n\n ${output.join()}`);
-        }
-        resolve({ code, output: output.join() });
+const run = (cmd) => __awaiter(void 0, void 0, void 0, function* () {
+    return new Promise((resolve, reject) => {
+        Object(external_child_process_.exec)(cmd, (error, stdout) => {
+            if (error)
+                return reject(error);
+            resolve(stdout);
+        });
     });
 });
 const validateEnvironment = (mode, folder, folders, branch) => {
@@ -1293,7 +1285,7 @@ function shouldVersionBeUpdated(foldersStr, targetBranch) {
             const localRelativePackagePath = external_path_default().join(folder, 'package.json');
             const localAbsolutePackagePath = external_path_default().join(process.env.GITHUB_WORKSPACE, localRelativePackagePath);
             const localPackage = __webpack_require__(875)(localAbsolutePackagePath);
-            const targetPackageRaw = (yield run(`git show ${targetBranch}:${localRelativePackagePath}`)).output;
+            const targetPackageRaw = yield run(`git show ${targetBranch}:${localRelativePackagePath}`);
             const targetPackage = JSON.parse(targetPackageRaw);
             if (semver_default().lte(localPackage.version, targetPackage.version)) {
                 output.push(Object(source.red)(`Package version needs to be updated in ${folder}. It's less than or equal to ${targetBranch} (${localPackage.version})`));

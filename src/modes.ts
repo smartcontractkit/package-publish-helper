@@ -57,9 +57,9 @@ export async function shouldVersionBeUpdated(
       localRelativePackagePath,
     )
     const localPackage = require(localAbsolutePackagePath)
-    const targetPackageRaw = (
-      await run(`git show ${targetBranch}:${localRelativePackagePath}`)
-    ).output
+    const targetPackageRaw = await run(
+      `git show ${targetBranch}:${localRelativePackagePath}`,
+    )
     const targetPackage = JSON.parse(targetPackageRaw)
 
     if (semver.lte(localPackage.version, targetPackage.version)) {
