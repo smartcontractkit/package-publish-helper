@@ -2,6 +2,9 @@ import * as helpers from '../src/helpers'
 import { shouldVersionBeUpdated, shouldPackagePublish } from '../src/modes'
 
 describe('shouldVersionBeUpdated', () => {
+  const dir = '/some/cwd'
+  const pkg = 'package.json'
+  const opts = { virtual: true }
   const folders = 'styleguide tools/redux tools/local-storage'
   const branch = 'develop'
 
@@ -13,14 +16,10 @@ describe('shouldVersionBeUpdated', () => {
   let runSpy: jest.SpyInstance
 
   beforeAll(() => {
-    const dir = '/some/cwd'
-    const pkg = 'package.json'
-    const opts = { virtual: true }
-
     process.env.GITHUB_WORKSPACE = dir
     folderHasGitChangesSpy = jest.spyOn(helpers, 'folderHasGitChanges')
     runSpy = jest.spyOn(helpers, 'run')
-    runSpy.mockReturnValue({ output: '{"version":"0.0.1"}' })
+    runSpy.mockReturnValue('{"version":"0.0.1"}')
     jest.mock(`${dir}/styleguide/${pkg}`, styleguide, opts)
     jest.mock(`${dir}/tools/redux/${pkg}`, redux, opts)
     jest.mock(`${dir}/tools/local-storage/${pkg}`, localStorage, opts)
