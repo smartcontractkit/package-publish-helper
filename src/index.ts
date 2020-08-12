@@ -19,6 +19,8 @@ async function main() {
     return
   }
 
+  process.chdir(process.env.GITHUB_WORKSPACE)
+
   try {
     if (mode === 'publish') {
       const { should_publish } = await shouldPackagePublish(folder)

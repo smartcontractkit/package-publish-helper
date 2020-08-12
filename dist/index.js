@@ -1331,6 +1331,7 @@ function main() {
             Object(core.setFailed)(failedMsg.join('\n'));
             return;
         }
+        process.chdir(process.env.GITHUB_WORKSPACE);
         try {
             if (mode === 'publish') {
                 const { should_publish } = yield shouldPackagePublish(folder);
