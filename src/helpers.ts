@@ -12,7 +12,7 @@ export const parseFolders = (folders: string): string[] =>
   folders.split(' ').filter((f) => f !== '')
 
 export const folderHasGitChanges = async (branch: string, folder: string) => {
-  const output = await run(`git diff ${branch} ${folder}`)
+  const output = await run(`git diff origin/${branch} ${folder}`)
   return output.length > 0
 }
 

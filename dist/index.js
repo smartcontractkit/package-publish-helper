@@ -1178,7 +1178,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 const parseFolders = (folders) => folders.split(' ').filter((f) => f !== '');
 const folderHasGitChanges = (branch, folder) => __awaiter(void 0, void 0, void 0, function* () {
-    const output = yield run(`git diff ${branch} ${folder}`);
+    const output = yield run(`git diff origin/${branch} ${folder}`);
     return output.length > 0;
 });
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
