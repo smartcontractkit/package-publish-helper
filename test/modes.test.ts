@@ -78,7 +78,7 @@ describe('shouldPackagePublish', () => {
     delete process.env.GITHUB_WORKSPACE
   })
 
-  it('should publish if the local verison is greater', async () => {
+  it('should publish if the local version is greater', async () => {
     localPackage.mockReturnValue({ version: '0.0.2' })
     const { should_publish } = await shouldPackagePublish(folder)
     expect(should_publish).toEqual('yes')
@@ -88,5 +88,11 @@ describe('shouldPackagePublish', () => {
     localPackage.mockReturnValue({ version: '0.0.1' })
     const { should_publish } = await shouldPackagePublish(folder)
     expect(should_publish).toEqual('no')
+  })
+
+  it('should publish if the remote verion is undefined', async () => {
+    getRemoteVersion.mockResolvedValue(undefined)
+    const { should_publish } = await shouldPackagePublish(folder)
+    expect(should_publish).toEqual('yes')
   })
 })

@@ -23,6 +23,11 @@ export async function shouldPackagePublish(
   const { version, name } = require(localPackagePath)
   const remoteVersion = await getRemoteVersion(name)
 
+  if (!remoteVersion) {
+    console.log('Package does not appear to be published. Publishing...')
+    return { should_publish: 'yes' }
+  }
+
   console.log(`Remote version is ${remoteVersion}, local verison is ${version}`)
 
   if (semver.gt(version, remoteVersion)) {

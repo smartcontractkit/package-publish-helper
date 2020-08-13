@@ -1256,6 +1256,10 @@ function shouldPackagePublish(folder) {
         const localPackagePath = external_path_default().join(process.env.GITHUB_WORKSPACE, folder, 'package.json');
         const { version, name } = __webpack_require__(875)(localPackagePath);
         const remoteVersion = yield getRemoteVersion(name);
+        if (!remoteVersion) {
+            console.log('Package does not appear to be published. Publishing...');
+            return { should_publish: 'yes' };
+        }
         console.log(`Remote version is ${remoteVersion}, local verison is ${version}`);
         if (semver_default().gt(version, remoteVersion)) {
             console.log(`Package should publish`);
