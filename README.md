@@ -51,9 +51,9 @@ Works as follows: if the version of the package is greater than the version publ
 
 ### publish outputs
 
-| Name             | Description                                                            | Default |
-| ---------------- | ---------------------------------------------------------------------- | ------- |
-| `should_publish` | (**required**) The mode to run the action in (`version` or `publish`). |         |
+| Name             | Description                       |
+| ---------------- | --------------------------------- |
+| `should_publish` | Resolves to either `yes` or `no`. |
 
 ### publish usage
 
