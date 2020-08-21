@@ -51,9 +51,9 @@ Works as follows: if the version of the package is greater than the version publ
 
 ### publish outputs
 
-| Name             | Description                       |
-| ---------------- | --------------------------------- |
-| `should_publish` | Resolves to either `yes` or `no`. |
+| Name             | Description                                | Value         |
+| ---------------- | ------------------------------------------ | ------------- |
+| `should_publish` | Whether or not the package should publish. | `yes` or `no` |
 
 ### publish usage
 
