@@ -48,4 +48,10 @@ describe('getRemoteVersion', () => {
     fetch.mockResolvedValue({ ok: true, status: 200, json: () => json })
     await expect(getRemoteVersion(name)).resolves.toEqual(version)
   })
+
+  it('should error gracefully if bad json is passed', async () => {
+    const json = { 'dist-tags': {} }
+    fetch.mockResolvedValue({ ok: true, status: 200, json: () => json })
+    expect(getRemoteVersion(name)).rejects.toThrowError(/^Could not/)
+  })
 })

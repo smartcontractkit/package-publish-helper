@@ -1193,9 +1193,26 @@ function getRemoteVersion(name, count = 0) {
             yield sleep(REMOTE_VERSION_FAIL_TIMEOUT);
             return getRemoteVersion(name, ++count);
         }
-        return (yield res.json())['dist-tags']['latest'];
+        const json = yield res.json();
+        const { version, error } = extractVersionFromResp(json);
+        if (error) {
+            throw new Error(`Could not extract version from response: ${JSON.stringify(json, null, 2)}\n Encountered error: ${error.message}`);
+        }
+        else {
+            return version;
+        }
     });
 }
+const extractVersionFromResp = (resp) => {
+    try {
+        return {
+            version: resp['dist-tags']['latest'],
+        };
+    }
+    catch (e) {
+        return { error: e };
+    }
+};
 const run = (cmd) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         Object(external_child_process_.exec)(cmd, (error, stdout) => {

@@ -36,7 +36,32 @@ export async function getRemoteVersion(
     return getRemoteVersion(name, ++count)
   }
 
-  return (await res.json())['dist-tags']['latest']
+  const json = await res.json()
+  const { version, error } = extractVersionFromResp(json)
+
+  if (error) {
+    throw new Error(
+      `Could not extract version from response: ${JSON.stringify(
+        json,
+        null,
+        2,
+      )}\n Encountered error: ${error.message}`,
+    )
+  } else {
+    return version
+  }
+}
+
+const extractVersionFromResp = (
+  resp: any,
+): { version?: string; error?: Error } => {
+  try {
+    return {
+      version: resp['dist-tags']['latest'],
+    }
+  } catch (e) {
+    return { error: e }
+  }
 }
 
 export const run = async (cmd: string): Promise<string> =>
