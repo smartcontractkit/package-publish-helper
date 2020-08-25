@@ -1196,7 +1196,8 @@ function getRemoteVersion(name, count = 0) {
         const json = yield res.json();
         const { version, error } = extractVersionFromResp(json);
         if (error) {
-            throw new Error(`Could not extract version from response: ${JSON.stringify(json, null, 2)}\n Encountered error: ${error.message}`);
+            console.log(`Tag 'latest' does not exist for package. Response from NPM was: ${JSON.stringify(json, null, 2)}`);
+            return;
         }
         else {
             return version;

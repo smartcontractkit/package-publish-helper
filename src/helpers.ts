@@ -40,13 +40,14 @@ export async function getRemoteVersion(
   const { version, error } = extractVersionFromResp(json)
 
   if (error) {
-    throw new Error(
-      `Could not extract version from response: ${JSON.stringify(
+    console.log(
+      `Tag 'latest' does not exist for package. Response from NPM was: ${JSON.stringify(
         json,
         null,
         2,
-      )}\n Encountered error: ${error.message}`,
+      )}`,
     )
+    return
   } else {
     return version
   }
